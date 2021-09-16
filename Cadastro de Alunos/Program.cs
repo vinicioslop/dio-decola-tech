@@ -51,15 +51,21 @@ namespace Cadastro_de_Alunos
 
                         break;
                     case "2":
+                        int vazio = 0;
                         Console.WriteLine();
                         foreach (var a in alunos)
                         {
                             if (!string.IsNullOrEmpty(a.Nome))
                             {
                                 Console.WriteLine($"Nome: {a.Nome} - Nota: {a.Nota}");
+                                vazio++;
                             }
                         }
-                        Console.WriteLine();
+                        if(vazio == 0){
+                            Console.WriteLine("Não há alunos cadastrados.");
+                            break;
+                        }
+
                         break;
                     case "3":
                         decimal notaTotal = 0;
@@ -72,6 +78,11 @@ namespace Cadastro_de_Alunos
                                 notaTotal = notaTotal + alunos[i].Nota;
                                 nrAlunos++;
                             }
+                        }
+
+                        if(nrAlunos == 0){
+                            Console.WriteLine("Não há alunos cadastrados.");
+                            break;
                         }
 
                         var mediaGeral = notaTotal / nrAlunos;
