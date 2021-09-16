@@ -10,46 +10,62 @@ namespace Cadastro_de_Alunos
             int indice = 0;
             string opcao = ObterOpcaoUsuario();
 
-            while(opcao.ToUpper() != "X")
+            while (opcao.ToUpper() != "X")
             {
-                switch(opcao)
+                switch (opcao)
                 {
                     case "1":
                         var aluno = new Aluno();
+                        bool valido = false;
+                        bool primeiro = true;
                         Console.Write("\nInforma o nome do Aluno: ");
                         aluno.Nome = Console.ReadLine();
 
-                        Console.Write("Informa a nota do Aluno: ");
-                        if(decimal.TryParse(Console.ReadLine(), out decimal nota))
+                        while (!valido)
                         {
-                            aluno.Nota = nota;
-                        }
-                        else
-                        {
-                            throw new ArgumentException("Valor da nota deve ser decimal");
+                            if (primeiro)
+                            {
+                                Console.Write("Informa a nota do Aluno: ");
+                                primeiro = false;
+                            }
+                            else
+                            {
+                                Console.Write("Nota inválida! Digite novamente: ");
+                            }
+                            if (decimal.TryParse(Console.ReadLine(), out decimal nota))
+                            {
+                                if (nota >= 0 && nota <= 10)
+                                {
+                                    aluno.Nota = nota;
+                                    valido = true;
+                                }
+                            }
+                            else
+                            {
+                                throw new ArgumentException("Valor da nota deve ser decimal");
+                            }
                         }
 
                         alunos[indice] = aluno;
                         indice++;
 
                         break;
-                    
                     case "2":
-                        foreach(var a in alunos)
+                        Console.WriteLine();
+                        foreach (var a in alunos)
                         {
-                            if(!string.IsNullOrEmpty(a.Nome))
+                            if (!string.IsNullOrEmpty(a.Nome))
                             {
-                                Console.WriteLine();
                                 Console.WriteLine($"Nome: {a.Nome} - Nota: {a.Nota}");
                             }
                         }
+                        Console.WriteLine();
                         break;
-
                     case "3":
                         decimal notaTotal = 0;
                         var nrAlunos = 0;
 
-                        for (int i=0; i < alunos.Length; i++)
+                        for (int i = 0; i < alunos.Length; i++)
                         {
                             if (!string.IsNullOrEmpty(alunos[i].Nome))
                             {
@@ -78,16 +94,16 @@ namespace Cadastro_de_Alunos
                             conceitoGeral = Conceito.B;
                         }
                         else
-                        { 
+                        {
                             conceitoGeral = Conceito.A;
                         }
-
                         Console.WriteLine($"MÉDIA GERAL: {mediaGeral} - CONCEITO: {conceitoGeral}");
-
+                        break;
+                    default:
+                        Console.WriteLine("\nValor digitado é diferente dos passados!");
+                        Console.WriteLine("Selecione uma opção novamente: ");
                         break;
 
-                    default:
-                        throw new ArgumentOutOfRangeException();
                 }
 
                 opcao = ObterOpcaoUsuario();
