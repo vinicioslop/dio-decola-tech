@@ -6,7 +6,8 @@ namespace Cadastro_de_Alunos
     {
         static void Main(string[] args)
         {
-            Aluno[] alunos = new Aluno[5];
+            int limiteAlunos = 5;
+            Aluno[] alunos = new Aluno[limiteAlunos];
             int indice = 0;
             string opcao = ObterOpcaoUsuario();
 
@@ -15,7 +16,7 @@ namespace Cadastro_de_Alunos
                 switch (opcao)
                 {
                     case "1":
-                        if (indice < 5)
+                        if (indice < limiteAlunos)
                         {
                             var aluno = new Aluno();
                             bool valido = false;
@@ -87,7 +88,7 @@ namespace Cadastro_de_Alunos
 
                         if (nrAlunos == 0)
                         {
-                            Console.WriteLine("Não há alunos cadastrados.");
+                            Console.WriteLine("\nNão há alunos cadastrados.");
                             break;
                         }
 
