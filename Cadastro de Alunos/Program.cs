@@ -15,40 +15,44 @@ namespace Cadastro_de_Alunos
                 switch (opcao)
                 {
                     case "1":
-                        var aluno = new Aluno();
-                        bool valido = false;
-                        bool primeiro = true;
-                        Console.Write("\nInforma o nome do Aluno: ");
-                        aluno.Nome = Console.ReadLine();
-
-                        while (!valido)
+                        if (indice < 5)
                         {
-                            if (primeiro)
+                            var aluno = new Aluno();
+                            bool valido = false;
+                            bool primeiro = true;
+                            Console.Write("\nInforma o nome do Aluno: ");
+                            aluno.Nome = Console.ReadLine();
+
+                            while (!valido)
                             {
-                                Console.Write("Informa a nota do Aluno: ");
-                                primeiro = false;
-                            }
-                            else
-                            {
-                                Console.Write("Nota inválida! Digite novamente: ");
-                            }
-                            if (decimal.TryParse(Console.ReadLine(), out decimal nota))
-                            {
-                                if (nota >= 0 && nota <= 10)
+                                if (primeiro)
                                 {
-                                    aluno.Nota = nota;
-                                    valido = true;
+                                    Console.Write("Informa a nota do Aluno: ");
+                                    primeiro = false;
+                                }
+                                else
+                                {
+                                    Console.Write("Nota inválida! Digite novamente: ");
+                                }
+                                if (decimal.TryParse(Console.ReadLine(), out decimal nota))
+                                {
+                                    if (nota >= 0 && nota <= 10)
+                                    {
+                                        aluno.Nota = nota;
+                                        valido = true;
+                                    }
+                                }
+                                else
+                                {
+                                    throw new ArgumentException("Valor da nota deve ser decimal");
                                 }
                             }
-                            else
-                            {
-                                throw new ArgumentException("Valor da nota deve ser decimal");
-                            }
+
+                            alunos[indice] = aluno;
+                            indice++;
+                        } else {
+                            Console.WriteLine("\nLimite de alunos excedido!");
                         }
-
-                        alunos[indice] = aluno;
-                        indice++;
-
                         break;
                     case "2":
                         int vazio = 0;
@@ -61,7 +65,8 @@ namespace Cadastro_de_Alunos
                                 vazio++;
                             }
                         }
-                        if(vazio == 0){
+                        if (vazio == 0)
+                        {
                             Console.WriteLine("Não há alunos cadastrados.");
                             break;
                         }
@@ -80,7 +85,8 @@ namespace Cadastro_de_Alunos
                             }
                         }
 
-                        if(nrAlunos == 0){
+                        if (nrAlunos == 0)
+                        {
                             Console.WriteLine("Não há alunos cadastrados.");
                             break;
                         }
@@ -108,7 +114,7 @@ namespace Cadastro_de_Alunos
                         {
                             conceitoGeral = Conceito.A;
                         }
-                        Console.WriteLine($"MÉDIA GERAL: {mediaGeral} - CONCEITO: {conceitoGeral}");
+                        Console.WriteLine($"\nMÉDIA GERAL: {mediaGeral} - CONCEITO: {conceitoGeral}");
                         break;
                     default:
                         Console.WriteLine("\nValor digitado é diferente dos passados!");
