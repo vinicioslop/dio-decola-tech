@@ -39,18 +39,20 @@ namespace DIO.Series
             }
 
             Console.WriteLine("Obrigado por utilizar nossos serviços.");
-            Console.ReadLine();
+            Console.WriteLine("Pressione qualquer tecla...");
+            Console.ReadKey();
         }
 
         private static void ListarSeries()
         {
             Console.WriteLine("Listar séries");
+            Console.Write("\n");
 
             var lista = repositorio.Lista();
 
             if (lista.Count == 0)
             {
-                Console.WriteLine("Nenhuma séie cadastrada.");
+                Console.WriteLine("Nenhuma série cadastrada.");
                 return;
             }
 
@@ -71,6 +73,9 @@ namespace DIO.Series
             {
                 Console.WriteLine("{0} - {1}", i, Enum.GetName(typeof(Genero), i));
             }
+
+            Console.Write("\n");
+
             Console.Write("Digite o gênero entre as opções acima: ");
             int entradaGenero = int.Parse(Console.ReadLine());
 
@@ -144,9 +149,11 @@ namespace DIO.Series
 
         private static string ObterOpcaoUsuario()
         {
-            Console.WriteLine();
+            Console.Write("\n");
             Console.WriteLine("DIO Séries a seu dispor!!!");
+            Console.Write("\n");
             Console.WriteLine("Informe a opção desejada:");
+            Console.Write("\n");
 
             Console.WriteLine("1 - Listar séries");
             Console.WriteLine("2 - Inserir nova série");
@@ -155,10 +162,11 @@ namespace DIO.Series
             Console.WriteLine("5 - Vizualizar série");
             Console.WriteLine("C - Limpar Tela");
             Console.WriteLine("X - Sair");
-            Console.WriteLine();
+            Console.Write("\n");
 
+            Console.Write("Opção: ");
             string opcaoUsuario = Console.ReadLine().ToUpper();
-            Console.WriteLine();
+            Console.Write("\n");
             return opcaoUsuario;
         }
     }
