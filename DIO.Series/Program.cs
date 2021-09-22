@@ -173,19 +173,33 @@ namespace DIO.Series
 
         private static void DesativarSerie()
         {
+            // COLETA O ID DIGITADO PELO USUÁRIO E, APÓS CONVERTÊ-LO PRA INTEIRO
+            // ARMAZENA EM UMA VARIÁVEL COM O NOME indiceSerie
             Console.Write("Digite o id da série: ");
             int indiceSerie = int.Parse(Console.ReadLine());
 
+            // COM O INDICE DIGITADO ARMAZENADO CHAMA A FUNÇÃO DESATIVA,
+            // ESSA FUNÇÃO A PARTIR DO INDICE DO USUARIO DESATIVARA A
+            // SERIE EM QUE O INDICE FOR IGUAL AO DIGITADO
             repositorio.Desativa(indiceSerie);
         }
 
         private static void VisualizarSerie()
         {
+            // COLETA O ID DIGITADO PELO USUÁRIO E, APÓS CONVERTÊ-LO PRA INTEIRO
+            // ARMAZENA EM UMA VARIÁVEL COM O NOME indiceSerie
             Console.Write("Digite o id da série: ");
             int indiceSerie = int.Parse(Console.ReadLine());
 
+            // COM O INDICE DIGITADO ARMAZENADO CHAMA A FUNÇÃO RetornaPorId()
+            // ESTA FUNCAO RETORNARA O OBJETO ONDE O ID DIGITADO SEJA IGUAL
+            // AO DE UMA DAS SERIES ARMAZENADAS
             var serie = repositorio.RetornaPorId(indiceSerie);
 
+            // LAÇO RESPONSAVEL POR EXIBIR A SERIE COLETADA
+            // CASO A SERIE DIGITADA ESTEJA MARCADA COMO
+            // DESATIVADA NÃO EXIBIRA O OBJETO DA SERIE
+            // E EXIBIRA A MENSAGEM "Série informada não está mais disponível."
             if (!serie.retornaDesativado())
             {
                 Console.WriteLine(serie);
