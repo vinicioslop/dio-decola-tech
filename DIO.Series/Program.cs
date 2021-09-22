@@ -77,7 +77,7 @@ namespace DIO.Series
 
             // PARA CADA VALOR EXISTENTE DENTRO DA LISTA DE SERIES EXECUTASSE O COMANDO ABAIXO
             // EXIBINDO O ID E TÍTULO DE CADA SÉRIE. CASO UMA DESTAS SÉRIES ESTIVER MARCADA COMO
-            // DESATIVADA, EXIBIRÁ A MENSAGEM DESATIVADO
+            // DESATIVADA, NÃO SERÁ EXIBIDA
             foreach (var serie in lista)
             {
                 if (!serie.retornaDesativado())
@@ -91,26 +91,42 @@ namespace DIO.Series
         {
             Console.WriteLine("Inserir nova série");
 
+            // CHAMA O MÉTODO PARA EXIBIR TODOS OS GÊNEROS CADASTRADOS
             exibeGeneros();
 
+            // PEDE PARA O USUÁRIO DIGITAR UMA DAS OPÇÕES DE GÊNERO DA SÉRIE
+            // EXIBIDAS, CONVERTE EM INTEIRO E ARMAZENA NA VARIÁVEL ABAIXO
             Console.Write("Digite o gênero entre as opções acima: ");
             int entradaGenero = int.Parse(Console.ReadLine());
 
+            // PEDE PARA O USUÁRIO DIGITAR O TÍTULO DA SÉRIE
+            // E ARMAZENA NA VARIÁVEL ABAIXO
             Console.Write("Digite o Título da Série: ");
             string entradaTitulo = Console.ReadLine();
 
+            // PEDE PARA O USUÁRIO DIGITAR O ANO DE INÍCIO DA SÉRIE,
+            // CONVERTE EM INTEIRO E ARMAZENA NA VARIÁVEL ABAIXO
             Console.Write("Digite o Ano de Início da Série: ");
             int entradaAno = int.Parse(Console.ReadLine());
 
+            // PEDE PARA O USUÁRIO DIGITAR A DESCRIÇÃO DA SÉRIE
+            // E ARMAZENA NA VARIÁVEL ABAIXO
             Console.Write("Digite a Descrição da Série: ");
             string entradaDescricao = Console.ReadLine();
 
+            // PEGA OS DADOS DIGITADOS PELO USUÁRIO E ATRIBUI A UMA NOVA
+            // INSTANCIA DE SÉRIE, CHAMANDO A FUNÇÃO ProximoId() DO
+            // REPOSITÓRIO DE SÉRIES PARA GERAR UM ID ÚNICO PARA A NOVA
+            // SÉRIE QUE SERÁ CADASTRADA
             Serie novaSerie = new Serie(id: repositorio.ProximoId(),
                                         genero: (Genero)entradaGenero,
                                         titulo: entradaTitulo,
                                         ano: entradaAno,
                                         descricao: entradaDescricao);
 
+            // CHAMA A FUNÇÃO Insere() DO REPOSITÓRIO DE SÉRIES PARA
+            // INSERIR UMA NOVA SÉRIE, LEVANDO COMO ARGUMENTO A INSTÂNCIA
+            // DE SÉRIE.
             repositorio.Insere(novaSerie);
         }
 
@@ -120,24 +136,38 @@ namespace DIO.Series
             int indiceSerie = int.Parse(Console.ReadLine());
 
             exibeGeneros();
+            
+            // PEDE PARA O USUÁRIO DIGITAR UMA DAS OPÇÕES DE GÊNERO DA SÉRIE
+            // EXIBIDAS, CONVERTE EM INTEIRO E ARMAZENA NA VARIÁVEL ABAIXO
             Console.Write("Digite o gênero entre as opções acima: ");
             int entradaGenero = int.Parse(Console.ReadLine());
 
+            // PEDE PARA O USUÁRIO DIGITAR O TÍTULO DA SÉRIE
+            // E ARMAZENA NA VARIÁVEL ABAIXO
             Console.Write("Digite o Título da Série: ");
             string entradaTitulo = Console.ReadLine();
 
+            // PEDE PARA O USUÁRIO DIGITAR O ANO DE INÍCIO DA SÉRIE,
+            // CONVERTE EM INTEIRO E ARMAZENA NA VARIÁVEL ABAIXO
             Console.Write("Digite o Ano de Início da Série: ");
             int entradaAno = int.Parse(Console.ReadLine());
 
+            // PEDE PARA O USUÁRIO DIGITAR A DESCRIÇÃO DA SÉRIE
+            // E ARMAZENA NA VARIÁVEL ABAIXO
             Console.Write("Digite a Descrição da Série: ");
             string entradaDescricao = Console.ReadLine();
 
+            // PEGA OS DADOS DIGITADOS PELO USUÁRIO E ATRIBUI A UMA NOVA
+            // INSTANCIA DE SÉRIE, USANDO DO ID JÁ EXISTENTE.
             Serie atualizaSerie = new Serie(id: indiceSerie,
                                         genero: (Genero)entradaGenero,
                                         titulo: entradaTitulo,
                                         ano: entradaAno,
                                         descricao: entradaDescricao);
 
+            // CHAMA A FUNÇÃO Atualiza() DO REPOSITÓRIO DE SÉRIES PARA
+            // ATUALIZAR SÉRIE, LEVANDO COMO ARGUMENTO A INSTÂNCIA
+            // DE SÉRIE E O ID DA SÉRIE EXISTENTE.
             repositorio.Atualiza(indiceSerie, atualizaSerie);
         }
 
