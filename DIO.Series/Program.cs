@@ -212,6 +212,8 @@ namespace DIO.Series
 
         private static string ObterOpcaoUsuario()
         {
+            // EXIBE UM MENU FEITO NO CONSOLE PARA EXIBIÇÃO DAS
+            // OPÇÕES DE FUNCIONALIDADE QUE O PROGRAMA POSSUI
             Console.Write("\n");
             Console.WriteLine("DIO Séries a seu dispor!!!");
             Console.Write("\n");
@@ -227,14 +229,22 @@ namespace DIO.Series
             Console.WriteLine("X - Sair");
             Console.Write("\n");
 
+            // COLETA A OPÇÃO DIGITADA PELO USUÁRIO E ARMAZENA EM
+            // UMA VARIAVEL, DEIXANDO TODAS AS LETRAS DIGITADAS
+            // POR ELE EM CAIXA ALTA
             Console.Write("Opção: ");
             string opcaoUsuario = Console.ReadLine().ToUpper();
             Console.Write("\n");
+
+            // RETORNA O VALOR DIGITADO PELO USUARIO PARA O
+            // TRECHO EM QUE ESTE MÉTODO FOI CHAMADO
             return opcaoUsuario;
         }
 
         private static void Inserir(string categoria)
         {
+            // CHAMA A FUNÇÃO RESPONSÁVEL POR EXIBIR TODOS OS
+            // GENEROS DE SÉRIES DISPONÍVEIS NO PROGRAMA
             exibeGeneros();
 
             Console.Write($"Digite o gênero entre as opções acima: ");
