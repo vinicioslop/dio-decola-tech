@@ -54,26 +54,8 @@ namespace DIO.Series
             Console.WriteLine("Listar séries");
             Console.Write("\n");
 
-            int desativados = 0;
-
             // GRAVA UMA LISTA DE OBJETOS DO REPOSITÓRIO DE SÉRIES PARA EXIBIÇÃO
             var lista = repositorio.Lista();
-
-            foreach (var serie in lista)
-            {
-                if(!serie.retornaDesativado())
-                {
-                    desativados++;
-                }
-            }
-
-            // UM VALOR NUNCA É EXCLUIDO, MAS MARCADO, ASSIM É POSSÍVEL TER UM CONTROLE DE
-            // IDS. USA DESTA PARTICULARIDADE PARA ENCONTRAR SE EXISTEM OU NÃO SERIES ARMAZENADAS
-            if (desativados == 0)
-            {
-                Console.WriteLine("Nenhuma série cadastrada.");
-                return;
-            }
 
             // PARA CADA VALOR EXISTENTE DENTRO DA LISTA DE SERIES EXECUTASSE O COMANDO ABAIXO
             // EXIBINDO O ID E TÍTULO DE CADA SÉRIE. CASO UMA DESTAS SÉRIES ESTIVER MARCADA COMO
@@ -91,38 +73,7 @@ namespace DIO.Series
         {
             Console.WriteLine("Inserir nova série");
 
-            // CHAMA O MÉTODO PARA EXIBIR TODOS OS GÊNEROS CADASTRADOS
-            exibeGeneros();
-
-            // PEDE PARA O USUÁRIO DIGITAR UMA DAS OPÇÕES DE GÊNERO DA SÉRIE
-            // EXIBIDAS, CONVERTE EM INTEIRO E ARMAZENA NA VARIÁVEL ABAIXO
-            Console.Write("Digite o gênero entre as opções acima: ");
-            int entradaGenero = int.Parse(Console.ReadLine());
-
-            // PEDE PARA O USUÁRIO DIGITAR O TÍTULO DA SÉRIE
-            // E ARMAZENA NA VARIÁVEL ABAIXO
-            Console.Write("Digite o Título da Série: ");
-            string entradaTitulo = Console.ReadLine();
-
-            // PEDE PARA O USUÁRIO DIGITAR O ANO DE INÍCIO DA SÉRIE,
-            // CONVERTE EM INTEIRO E ARMAZENA NA VARIÁVEL ABAIXO
-            Console.Write("Digite o Ano de Início da Série: ");
-            int entradaAno = int.Parse(Console.ReadLine());
-
-            // PEDE PARA O USUÁRIO DIGITAR A DESCRIÇÃO DA SÉRIE
-            // E ARMAZENA NA VARIÁVEL ABAIXO
-            Console.Write("Digite a Descrição da Série: ");
-            string entradaDescricao = Console.ReadLine();
-
-            // PEGA OS DADOS DIGITADOS PELO USUÁRIO E ATRIBUI A UMA NOVA
-            // INSTANCIA DE SÉRIE, CHAMANDO A FUNÇÃO ProximoId() DO
-            // REPOSITÓRIO DE SÉRIES PARA GERAR UM ID ÚNICO PARA A NOVA
-            // SÉRIE QUE SERÁ CADASTRADA
-            Serie novaSerie = new Serie(id: repositorio.ProximoId(),
-                                        genero: (Genero)entradaGenero,
-                                        titulo: entradaTitulo,
-                                        ano: entradaAno,
-                                        descricao: entradaDescricao);
+            Serie novaSerie = CriaSerie();
 
             // CHAMA A FUNÇÃO Insere() DO REPOSITÓRIO DE SÉRIES PARA
             // INSERIR UMA NOVA SÉRIE, LEVANDO COMO ARGUMENTO A INSTÂNCIA
@@ -136,34 +87,13 @@ namespace DIO.Series
             int indiceSerie = int.Parse(Console.ReadLine());
 
             exibeGeneros();
-            
+
             // PEDE PARA O USUÁRIO DIGITAR UMA DAS OPÇÕES DE GÊNERO DA SÉRIE
             // EXIBIDAS, CONVERTE EM INTEIRO E ARMAZENA NA VARIÁVEL ABAIXO
             Console.Write("Digite o gênero entre as opções acima: ");
             int entradaGenero = int.Parse(Console.ReadLine());
 
-            // PEDE PARA O USUÁRIO DIGITAR O TÍTULO DA SÉRIE
-            // E ARMAZENA NA VARIÁVEL ABAIXO
-            Console.Write("Digite o Título da Série: ");
-            string entradaTitulo = Console.ReadLine();
-
-            // PEDE PARA O USUÁRIO DIGITAR O ANO DE INÍCIO DA SÉRIE,
-            // CONVERTE EM INTEIRO E ARMAZENA NA VARIÁVEL ABAIXO
-            Console.Write("Digite o Ano de Início da Série: ");
-            int entradaAno = int.Parse(Console.ReadLine());
-
-            // PEDE PARA O USUÁRIO DIGITAR A DESCRIÇÃO DA SÉRIE
-            // E ARMAZENA NA VARIÁVEL ABAIXO
-            Console.Write("Digite a Descrição da Série: ");
-            string entradaDescricao = Console.ReadLine();
-
-            // PEGA OS DADOS DIGITADOS PELO USUÁRIO E ATRIBUI A UMA NOVA
-            // INSTANCIA DE SÉRIE, USANDO DO ID JÁ EXISTENTE.
-            Serie atualizaSerie = new Serie(id: indiceSerie,
-                                        genero: (Genero)entradaGenero,
-                                        titulo: entradaTitulo,
-                                        ano: entradaAno,
-                                        descricao: entradaDescricao);
+            Serie atualizaSerie = CriaSerie(indiceSerie);
 
             // CHAMA A FUNÇÃO Atualiza() DO REPOSITÓRIO DE SÉRIES PARA
             // ATUALIZAR SÉRIE, LEVANDO COMO ARGUMENTO A INSTÂNCIA
@@ -182,6 +112,8 @@ namespace DIO.Series
             // ESSA FUNÇÃO A PARTIR DO INDICE DO USUARIO DESATIVARA A
             // SERIE EM QUE O INDICE FOR IGUAL AO DIGITADO
             repositorio.Desativa(indiceSerie);
+
+            Console.WriteLine("Série excluida com sucesso!");
         }
 
         private static void VisualizarSerie()
@@ -243,41 +175,90 @@ namespace DIO.Series
 
         private static void Inserir(string categoria)
         {
-            // CHAMA A FUNÇÃO RESPONSÁVEL POR EXIBIR TODOS OS
-            // GENEROS DE SÉRIES DISPONÍVEIS NO PROGRAMA
-            exibeGeneros();
-
-            Console.Write($"Digite o gênero entre as opções acima: ");
-            int entradaGenero = int.Parse(Console.ReadLine());
-
-            Console.Write("Digite o Título da Série: ");
-            string entradaTitulo = Console.ReadLine();
-
-            Console.Write("Digite o Ano de Início da Série: ");
-            int entradaAno = int.Parse(Console.ReadLine());
-
-            Console.Write("Digite a Descrição da Série: ");
-            string entradaDescricao = Console.ReadLine();
-
-            Serie novaSerie = new Serie(id: repositorio.ProximoId(),
-                                        genero: (Genero)entradaGenero,
-                                        titulo: entradaTitulo,
-                                        ano: entradaAno,
-                                        descricao: entradaDescricao);
+            Serie novaSerie = CriaSerie();
 
             repositorio.Insere(novaSerie);
         }
 
         private static void exibeGeneros()
         {
-            //link get value de enum
-            //link get name de enum
             foreach (int i in Enum.GetValues(typeof(Genero)))
             {
                 Console.WriteLine("{0} - {1}", i, Enum.GetName(typeof(Genero), i));
             }
 
             Console.Write("\n");
+        }
+
+        private static Serie CriaSerie()
+        {
+            // CHAMA A FUNÇÃO RESPONSÁVEL POR COLETAR E EXIBIR TODOS OS
+            // GENEROS DE SÉRIES DISPONÍVEIS NO PROGRAMA PARA O USUÁRIO
+            exibeGeneros();
+
+            // PEDE PARA O USUÁRIO DIGITAR O GÊNERO DA SÉRIE
+            // E ARMAZENA NA VARIÁVEL ABAIXO
+            Console.Write($"Digite o gênero entre as opções acima: ");
+            int entradaGenero = int.Parse(Console.ReadLine());
+
+            // PEDE PARA O USUÁRIO DIGITAR O TÍTULO DA SÉRIE
+            // E ARMAZENA NA VARIÁVEL ABAIXO
+            Console.Write("Digite o Título da Série: ");
+            string entradaTitulo = Console.ReadLine();
+
+            // PEDE PARA O USUÁRIO DIGITAR O ANO DE INÍCIO DA SÉRIE,
+            // CONVERTE EM INTEIRO E ARMAZENA NA VARIÁVEL ABAIXO
+            Console.Write("Digite o Ano de Início da Série: ");
+            int entradaAno = int.Parse(Console.ReadLine());
+
+            // PEDE PARA O USUÁRIO DIGITAR A DESCRIÇÃO DA SÉRIE
+            // E ARMAZENA NA VARIÁVEL ABAIXO
+            Console.Write("Digite a Descrição da Série: ");
+            string entradaDescricao = Console.ReadLine();
+
+            // PEGA OS DADOS DIGITADOS PELO USUÁRIO E ATRIBUI A UMA NOVA
+            // INSTANCIA DE SÉRIE, USANDO DO ID JÁ EXISTENTE.
+
+            return new Serie(id: repositorio.ProximoId(),
+                                genero: (Genero)entradaGenero,
+                                titulo: entradaTitulo,
+                                ano: entradaAno,
+                                descricao: entradaDescricao);
+        }
+
+        private static Serie CriaSerie(int entradaId)
+        {
+            // CHAMA A FUNÇÃO RESPONSÁVEL POR COLETAR E EXIBIR TODOS OS
+            // GENEROS DE SÉRIES DISPONÍVEIS NO PROGRAMA PARA O USUÁRIO
+            exibeGeneros();
+
+            // PEDE PARA O USUÁRIO DIGITAR O GÊNERO DA SÉRIE
+            // E ARMAZENA NA VARIÁVEL ABAIXO
+            Console.Write($"Digite o gênero entre as opções acima: ");
+            int entradaGenero = int.Parse(Console.ReadLine());
+
+            // PEDE PARA O USUÁRIO DIGITAR O TÍTULO DA SÉRIE
+            // E ARMAZENA NA VARIÁVEL ABAIXO
+            Console.Write("Digite o Título da Série: ");
+            string entradaTitulo = Console.ReadLine();
+
+            // PEDE PARA O USUÁRIO DIGITAR O ANO DE INÍCIO DA SÉRIE,
+            // CONVERTE EM INTEIRO E ARMAZENA NA VARIÁVEL ABAIXO
+            Console.Write("Digite o Ano de Início da Série: ");
+            int entradaAno = int.Parse(Console.ReadLine());
+
+            // PEDE PARA O USUÁRIO DIGITAR A DESCRIÇÃO DA SÉRIE
+            // E ARMAZENA NA VARIÁVEL ABAIXO
+            Console.Write("Digite a Descrição da Série: ");
+            string entradaDescricao = Console.ReadLine();
+
+            // PEGA OS DADOS DIGITADOS PELO USUÁRIO E ATRIBUI A UMA NOVA
+            // INSTANCIA DE SÉRIE, USANDO DO ID JÁ EXISTENTE.
+            return new Serie(id: entradaId,
+                                        genero: (Genero)entradaGenero,
+                                        titulo: entradaTitulo,
+                                        ano: entradaAno,
+                                        descricao: entradaDescricao);
         }
     }
 }
